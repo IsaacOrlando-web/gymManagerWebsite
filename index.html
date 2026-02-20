@@ -268,6 +268,46 @@
                 font-size: 24px;
             }
         }
+
+         @media (max-width: 700px) {
+        .navbar {
+            flex-direction: column;
+            align-items: start;
+            gap: 15px;
+        }
+        .nav-links {
+            gap: 24px;
+        }
+        .phone-block {
+            flex-direction: column;
+            gap: 8px;
+            padding: 18px 24px;
+            border-radius: 48px;
+        }
+        .phone-number {
+            font-size: 24px;
+        }
+        
+        /* NUEVO: Cambiar grid a 1 columna en móviles */
+        .grid-2-columns {
+            grid-template-columns: 1fr !important;
+        }
+        
+        /* Ajustar orden para que la imagen quede debajo del texto */
+        .grid-2-columns .showcase-card {
+            order: 2 !important;
+            margin-top: 20px;
+        }
+        
+        /* Aumentar altura de imágenes en móvil para que se vean completas */
+        .showcase-card img {
+            height: auto !important;  /* Cambiado de 240px a auto */
+            max-height: 320px;        /* Límite máximo opcional */
+            width: 100%;
+            object-fit: contain;      /* Cambiado de cover a contain */
+            background-color: #e6edf6; /* Fondo por si la imagen no cubre todo */
+        }
+    }
     </style>
 </head>
 <body>
@@ -323,85 +363,86 @@
     </section>
 
     <!-- SECCIÓN DESCRIPCIÓN DEL PROGRAMA (texto + lugar para imagen) -->
-    <section id="programa" style="padding: 90px 0 40px;">
-        <div class="container">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
-                <div>
-                    <span style="font-size: 14px; color: var(--primary-color); text-transform: uppercase; letter-spacing: 1px;">qué hace</span>
-                    <h2 class="section-title">Registro de miembros y control de pagos</h2>
-                    <div class="hr-subtle"></div>
-                    <p style="color: var(--text-secondary); margin-bottom: 30px; font-size: 16px;">
-                        Sabrás al instante quién está activo, quién debe, qué plan tiene y los días de atraso. 
-                        Sección exclusiva para finanzas (solo usuarios autorizados) con ingresos del mes y nuevos socios.
-                    </p>
-                    <p style="color: var(--text-primary); font-weight: 500;">
-                        ✔ Abandoná los papeles y las planillas Excel interminables.
-                    </p>
-                </div>
-                <div class="showcase-card">
-                    <img src='./img/imgMembers.png' 
-                        alt="Vista de todos los miembros en GymManager" 
-                        style="width: 100%; height: 220px; object-fit: cover; display: block; border-bottom: 1px solid var(--border-color);">
-                    <div class="card-content">
-                        <h3>Vista "todos los miembros"</h3>
-                        <p>Filtros por estado: activos, morosos, vencidos. Búsqueda instantánea.</p>
-                    </div>
+    <!-- SECCIÓN DESCRIPCIÓN DEL PROGRAMA -->
+<section id="programa" style="padding: 90px 0 40px;">
+    <div class="container">
+        <div class="grid-2-columns" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+            <div>
+                <span style="font-size: 14px; color: var(--primary-color); text-transform: uppercase; letter-spacing: 1px;">qué hace</span>
+                <h2 class="section-title">Registro de miembros y control de pagos</h2>
+                <div class="hr-subtle"></div>
+                <p style="color: var(--text-secondary); margin-bottom: 30px; font-size: 16px;">
+                    Sabrás al instante quién está activo, quién debe, qué plan tiene y los días de atraso. 
+                    Sección exclusiva para finanzas (solo usuarios autorizados) con ingresos del mes y nuevos socios.
+                </p>
+                <p style="color: var(--text-primary); font-weight: 500;">
+                    ✔ Abandoná los papeles y las planillas Excel interminables.
+                </p>
+            </div>
+            <div class="showcase-card" style="max-width: 100%;">
+                <img src='./img/imgMembers.png' 
+                    alt="Vista de todos los miembros en GymManager" 
+                    style="width: 100%; height: 220px; object-fit: cover; display: block; border-bottom: 1px solid var(--border-color);">
+                <div class="card-content">
+                    <h3>Vista "todos los miembros"</h3>
+                    <p>Filtros por estado: activos, morosos, vencidos. Búsqueda instantánea.</p>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- SEGUNDA IMAGEN / CAPTURA (finanzas) -->
-    <section style="padding: 40px 0;" id="imagenes">
-        <div class="container">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
-                <div class="showcase-card" style="order: 1;">
+<!-- SEGUNDA IMAGEN / CAPTURA (finanzas) -->
+<section style="padding: 40px 0;" id="imagenes">
+    <div class="container">
+        <div class="grid-2-columns" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+            <div class="showcase-card" style="order: 1; max-width: 100%;">
                 <img src="img/finanzas.png" 
                     alt="Panel de finanzas GymManager" 
                     style="width: 100%; height: 220px; object-fit: cover; display: block; border-bottom: 1px solid var(--border-color);">
                 <div class="card-content">
-            <h3>Panel para usuarios autorizados</h3>
-            <p>Ingresos del mes, nuevos miembros, total activos. Diseño claro y minimal.</p>
-            </div>
-        </div>
-                <div style="order: 2;">
-                    <span style="font-size: 14px; color: var(--primary-color); text-transform: uppercase;">finanzas claras</span>
-                    <h2 class="section-title">Lo que entra, lo que debe</h2>
-                    <div class="hr-subtle"></div>
-                    <p style="color: var(--text-secondary);">
-                        Sin complicaciones: solo las personas que tú autorices ven los números. 
-                        Ideal para dueños o administradores.
-                    </p>
+                    <h3>Panel para usuarios autorizados</h3>
+                    <p>Ingresos del mes, nuevos miembros, total activos. Diseño claro y minimal.</p>
                 </div>
             </div>
+            <div style="order: 2;">
+                <span style="font-size: 14px; color: var(--primary-color); text-transform: uppercase;">finanzas claras</span>
+                <h2 class="section-title">Lo que entra, lo que debe</h2>
+                <div class="hr-subtle"></div>
+                <p style="color: var(--text-secondary);">
+                    Sin complicaciones: solo las personas que tú autorices ven los números. 
+                    Ideal para dueños o administradores.
+                </p>
+            </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- TERCERA IMAGEN: personalización + logo -->
-    <section style="padding: 40px 0;">
-        <div class="container">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
-                <div>
-                    <span style="font-size: 14px; color: var(--primary-color); text-transform: uppercase;">a tu medida</span>
-                    <h2 class="section-title">Tu logo, tu gimnasio, tus socios</h2>
-                    <div class="hr-subtle"></div>
-                    <p style="color: var(--text-secondary);">
-                        Cargamos todos los miembros actuales, ponemos tu logo y te capacitamos 
-                        sin costo. El sistema se ve como parte de tu marca.
-                    </p>
-                </div>
-                <div class="showcase-card">
-                    <img src="img/dashboard.png" 
-                        alt="Vista de todos los miembros en GymManager" 
-                        style="width: 100%; height: 220px; object-fit: cover; display: block; border-bottom: 1px solid var(--border-color);">
-                    <div class="card-content">
-                    <h3>Applicación Adaptable a tu estilo</h3>
+<!-- TERCERA IMAGEN: personalización + logo -->
+<section style="padding: 40px 0;">
+    <div class="container">
+        <div class="grid-2-columns" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+            <div>
+                <span style="font-size: 14px; color: var(--primary-color); text-transform: uppercase;">a tu medida</span>
+                <h2 class="section-title">Tu logo, tu gimnasio, tus socios</h2>
+                <div class="hr-subtle"></div>
+                <p style="color: var(--text-secondary);">
+                    Cargamos todos los miembros actuales, ponemos tu logo y te capacitamos 
+                    sin costo. El sistema se ve como parte de tu marca.
+                </p>
+            </div>
+            <div class="showcase-card" style="max-width: 100%;">
+                <img src="img/dashboard.png" 
+                    alt="Dashboard GymManager" 
+                    style="width: 100%; height: 220px; object-fit: cover; display: block; border-bottom: 1px solid var(--border-color);">
+                <div class="card-content">
+                    <h3>Aplicación adaptable a tu estilo</h3>
                     <p>Cambio en los colores, logo, para que sea tuya</p>
                 </div>
-                </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- SECCIÓN PRECIO (simple, solo números) -->
     <section id="precios" style="padding: 80px 0;">
