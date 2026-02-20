@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GymManager · minimal · software para gimnasios</title>
+    <!-- Font Awesome 6 (íconos limpios) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ===== VARIABLES (misma paleta, esencia limpia) ===== */
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea, #764ba2);
+            --success-gradient: linear-gradient(135deg, #27ae60, #2ecc71);
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+            --primary-color: #667eea;
+            --bg-color: #f4f7fb;
+            --card-bg: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-light: #94a3b8;
+            --border-color: #e2e8f0;
+            --shadow-light: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.02);
+            --shadow-medium: 0 20px 30px -10px rgba(102,126,234,0.15);
+            --border-radius: 24px;
+            --border-radius-sm: 16px;
+            --border-radius-xs: 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        /* tipografía limpia */
+        h1, h2, h3 {
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        /* ===== COMPONENTES REUTILIZABLES (muy minimal) ===== */
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 60px;
+            font-weight: 500;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            background: white;
+            color: var(--text-primary);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 8px 18px -6px rgba(102,126,234,0.4);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 24px -8px rgba(102,126,234,0.5);
+        }
+
+        .btn-outline {
+            border: 1.5px solid var(--border-color);
+            background: transparent;
+            color: var(--text-primary);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary-color);
+            background: #f8faff;
+        }
+
+        /* logo exacto de la app (como en sidebar) */
+        .logo-group {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+        }
+        .logo-group h1 {
+            font-size: 26px;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .logo-group p {
+            color: var(--text-light);
+            font-size: 13px;
+            font-weight: 400;
+        }
+
+        /* navbar minimal */
+        .navbar {
+            padding: 24px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(0,0,0,0.02);
+        }
+
+        /* enlaces sutiles */
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 450;
+            font-size: 15px;
+        }
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* tarjetas imagen + texto (para mostrar capturas) */
+        .showcase-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+            transition: 0.2s ease;
+            border: 1px solid #ffffff50;
+        }
+        .showcase-card:hover {
+            box-shadow: var(--shadow-medium);
+        }
+
+        .image-placeholder {
+            background: #e6edf6;
+            height: 220px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 400;
+            background-image: radial-gradient(circle at 20px 20px, #cdddec 1.5px, transparent 1px);
+            background-size: 30px 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .image-placeholder i {
+            font-size: 42px;
+            color: var(--primary-color);
+            opacity: 0.5;
+            margin-right: 8px;
+        }
+
+        .card-content {
+            padding: 24px;
+        }
+
+        .card-content h3 {
+            font-size: 18px;
+            margin-bottom: 6px;
+        }
+
+        .card-content p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* sección título */
+        .section-title {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: -0.03em;
+        }
+
+        .section-sub {
+            color: var(--text-secondary);
+            font-size: 16px;
+            max-width: 580px;
+            margin-bottom: 48px;
+        }
+
+        /* líneas finas */
+        .hr-subtle {
+            width: 60px;
+            height: 3px;
+            background: var(--primary-gradient);
+            border-radius: 4px;
+            margin: 24px 0 32px;
+        }
+
+        /* bloque de teléfono (único contacto) */
+        .phone-block {
+            background: var(--card-bg);
+            border-radius: 100px;
+            padding: 18px 36px;
+            display: inline-flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: var(--shadow-light);
+            border: 1px solid var(--border-color);
+            margin: 24px 0 8px;
+        }
+        .phone-block i {
+            font-size: 32px;
+            color: var(--success-color);
+            background: #e6f7ec;
+            padding: 10px;
+            border-radius: 50%;
+        }
+        .phone-number {
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+        .phone-caption {
+            color: var(--text-light);
+            font-size: 15px;
+        }
+
+        /* footer minimal */
+        .footer {
+            padding: 48px 0 32px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 80px;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        /* responsive */
+        @media (max-width: 700px) {
+            .navbar {
+                flex-direction: column;
+                align-items: start;
+                gap: 15px;
+            }
+            .nav-links {
+                gap: 24px;
+            }
+            .phone-block {
+                flex-direction: column;
+                gap: 8px;
+                padding: 18px 24px;
+                border-radius: 48px;
+            }
+            .phone-number {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER MINIMAL (solo logo + nav) -->
+    <div class="container">
+        <div class="navbar">
+            <div class="logo-group">
+                <h1>💪 GymManager</h1>
+                <p>panel de control</p>
+            </div>
+            <div class="nav-links">
+                <a href="#programa">programa</a>
+                <a href="#imagenes">capturas</a>
+                <a href="#precios">precio</a>
+                <a href="#telefono">teléfono</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO: mensaje muy directo, sin peso visual -->
+    <section style="padding: 60px 0 20px;">
+        <div class="container">
+            <div style="max-width: 720px;">
+                <span style="background: #eceefb; color: var(--primary-color); padding: 4px 16px; border-radius: 40px; font-size: 14px; font-weight: 500;">👉 para dueños de gimnasios</span>
+                <h1 style="font-size: 56px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; margin: 32px 0 24px;">
+                    Control de socios <br>sin planillas ni papel.
+                </h1>
+                <p style="font-size: 18px; color: var(--text-secondary); max-width: 560px;">
+                    Gimnasios optimizan membresías, pagos y finanzas. Todo en una app que adaptamos con tu logo y datos.
+                </p>
+                <div style="display: flex; gap: 16px; margin: 40px 0 40px;">
+                    <a href="#telefono" class="btn btn-primary"><i class="fas fa-phone-alt"></i> llamar y conversar</a>
+                    <a href="#imagenes" class="btn btn-outline">ver programa →</a>
+                </div>
+            </div>
+
+            <!-- miniprevia de interfaz (sutil) -->
+            <div style="background: var(--card-bg); border-radius: 32px; padding: 24px; max-width: 860px; box-shadow: var(--shadow-light); border: 1px solid #ffffff; margin-top: 30px;">
+                <div style="display: flex; gap: 12px; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; margin-bottom: 16px;">
+                    <i class="fas fa-circle" style="color: var(--danger-color); font-size: 10px;"></i>
+                    <i class="fas fa-circle" style="color: var(--warning-color); font-size: 10px;"></i>
+                    <i class="fas fa-circle" style="color: var(--success-color); font-size: 10px;"></i>
+                    <span style="color: var(--text-light); margin-left: 8px; font-size:13px;">Vista del panel</span>
+                </div>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <span style="background: var(--bg-color); padding: 8px 18px; border-radius: 40px;"><i class="fas fa-search" style="color: var(--primary-color);"></i> buscar miembro</span>
+                    <span style="background: #e6f7ec; color: #27ae60; padding: 8px 18px; border-radius: 40px;">12 activos</span>
+                    <span style="background: #fff1e6; color: #e67e22; padding: 8px 18px; border-radius: 40px;">3 morosos</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN DESCRIPCIÓN DEL PROGRAMA (texto + lugar para imagen) -->
+    <section id="programa" style="padding: 90px 0 40px;">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+                <div>
+                    <span style="font-size: 14px; color: var(--primary-color); text-transform: uppercase; letter-spacing: 1px;">qué hace</span>
+                    <h2 class="section-title">Registro de miembros y control de pagos</h2>
+                    <div class="hr-subtle"></div>
+                    <p style="color: var(--text-secondary); margin-bottom: 30px; font-size: 16px;">
+                        Sabrás al instante quién está activo, quién debe, qué plan tiene y los días de atraso. 
+                        Sección exclusiva para finanzas (solo usuarios autorizados) con ingresos del mes y nuevos socios.
+                    </p>
+                    <p style="color: var(--text-primary); font-weight: 500;">
+                        ✔ Abandoná los papeles y las planillas Excel interminables.
+                    </p>
+                </div>
+                <div class="showcase-card">
+                    <img src='./img/imgMembers.png' 
+                        alt="Vista de todos los miembros en GymManager" 
+                        style="width: 100%; height: 220px; object-fit: cover; display: block; border-bottom: 1px solid var(--border-color);">
+                    <div class="card-content">
+                        <h3>Vista "todos los miembros"</h3>
+                        <p>Filtros por estado: activos, morosos, vencidos. Búsqueda instantánea.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEGUNDA IMAGEN / CAPTURA (finanzas) -->
+    <section style="padding: 40px 0;" id="imagenes">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+                <div class="showcase-card" style="order: 1;">
+                <img src="img/finanzas.png" 
+                    alt="Panel de finanzas GymManager" 
+                    style="width: 100%; height: 220px; object-fit: cover; display: block; border-bottom: 1px solid var(--border-color);">
+                <div class="card-content">
+            <h3>Panel para usuarios autorizados</h3>
+            <p>Ingresos del mes, nuevos miembros, total activos. Diseño claro y minimal.</p>
+            </div>
+        </div>
+                <div style="order: 2;">
+                    <span style="font-size: 14px; color: var(--primary-color); text-transform: uppercase;">finanzas claras</span>
+                    <h2 class="section-title">Lo que entra, lo que debe</h2>
+                    <div class="hr-subtle"></div>
+                    <p style="color: var(--text-secondary);">
+                        Sin complicaciones: solo las personas que tú autorices ven los números. 
+                        Ideal para dueños o administradores.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TERCERA IMAGEN: personalización + logo -->
+    <section style="padding: 40px 0;">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+                <div>
+                    <span style="font-size: 14px; color: var(--primary-color); text-transform: uppercase;">a tu medida</span>
+                    <h2 class="section-title">Tu logo, tu gimnasio, tus socios</h2>
+                    <div class="hr-subtle"></div>
+                    <p style="color: var(--text-secondary);">
+                        Cargamos todos los miembros actuales, ponemos tu logo y te capacitamos 
+                        sin costo. El sistema se ve como parte de tu marca.
+                    </p>
+                </div>
+                <div class="showcase-card">
+                    <img src="img/dashboard.png" 
+                        alt="Vista de todos los miembros en GymManager" 
+                        style="width: 100%; height: 220px; object-fit: cover; display: block; border-bottom: 1px solid var(--border-color);">
+                    <div class="card-content">
+                    <h3>Applicación Adaptable a tu estilo</h3>
+                    <p>Cambio en los colores, logo, para que sea tuya</p>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN PRECIO (simple, solo números) -->
+    <section id="precios" style="padding: 80px 0;">
+        <div class="container">
+            <div style="background: var(--card-bg); border-radius: 48px; padding: 56px 48px; box-shadow: var(--shadow-light);">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div>
+                        <h2 class="section-title" style="margin-bottom: 8px;">Inversión clara</h2>
+                        <div class="hr-subtle"></div>
+                        <div style="font-size: 52px; font-weight: 600; letter-spacing: -0.02em;">$90.000</div>
+                        <p style="color: var(--text-secondary); margin: 8px 0 24px;">pago único · incluye adaptación, logo, carga de miembros y capacitación</p>
+                        <div style="font-size: 38px; font-weight: 600;">$50.000 <span style="font-size: 16px; font-weight: 400; color: var(--text-light);">/ mes</span></div>
+                        <p style="color: var(--text-secondary); margin: 8px 0 0;">hosting, mantenimiento, soporte inmediato y arreglo de errores</p>
+                    </div>
+                    <div style="background: var(--bg-color); border-radius: 32px; padding: 32px;">
+                        <i class="fas fa-shield-alt" style="color: var(--primary-color); font-size: 40px; margin-bottom: 16px;"></i>
+                        <h3 style="font-size: 20px;">Sin sorpresas</h3>
+                        <p style="color: var(--text-secondary);">No hay contratos largos. Si un error aparece, lo soluciono al instante. Hosting y respaldo incluidos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TELÉFONO DIRECTO (único medio de contacto) -->
+    <section id="telefono" style="padding: 40px 0 80px;">
+        <div class="container">
+            <div style="text-align: center;">
+                <span style="background: #eaeefb; padding: 4px 20px; border-radius: 40px; font-size: 14px; color: var(--primary-color);">📞 contacto directo</span>
+                <h2 style="font-size: 36px; font-weight: 550; margin: 30px 0 10px;">Hablamos por teléfono</h2>
+                <p style="color: var(--text-secondary); max-width: 440px; margin: 0 auto 24px;">
+                    Conversemos sin formularios. Me adapto a tu gimnasio, respondo dudas y coordinamos la reunión.
+                </p>
+                <!-- bloque teléfono (único) -->
+                <div class="phone-block">
+                    <i class="fas fa-phone-alt"></i>
+                    <span class="phone-number">+56 9 6452 4143</span>
+                </div>
+                <p class="phone-caption">disponible de lunes a viernes 9am a 7pm</p>
+
+                <!-- mini aclaración de que es el único medio -->
+                <div style="margin-top: 32px; color: var(--text-light); font-size: 14px;">
+                    <i class="fas fa-mobile-alt"></i> también WhatsApp al mismo número
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER MINIMAL con logo -->
+    <footer class="footer">
+        <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px;">
+                <div class="logo-group">
+                    <h1>💪 GymManager</h1>
+                    <p>para gimnasios</p>
+                </div>
+                <div style="color: var(--text-light);">
+                    © 2025 · software simple y efectivo
+                </div>
+                <div style="display: flex; gap: 24px;">
+                    <span><i class="fas fa-phone"></i> +57 300 123 4567</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- smooth scroll sin ruido -->
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if(target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
