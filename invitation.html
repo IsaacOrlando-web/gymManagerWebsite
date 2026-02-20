@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GymManager · tarjeta simple</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f4f7fb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            padding: 20px;
+        }
+
+        /* TARJETA HORIZONTAL MINIMAL */
+        .card-simple {
+            max-width: 750px;
+            width: 100%;
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 20px 35px -10px rgba(102,126,234,0.2);
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* CONTENIDO FLEX EN DOS COLUMNAS */
+        .card-row {
+            display: flex;
+            min-height: 260px;
+        }
+
+        /* COLUMNA IZQUIERDA (LOGO Y TEXTO) */
+        .left-col {
+            flex: 1.5;
+            padding: 35px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* LOGO EXACTAMENTE COMO EN TU INDEX */
+        .logo-group {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            margin-bottom: 15px;
+        }
+        
+        .logo-group h1 {
+            font-size: 36px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+        
+        .logo-group p {
+            color: #94a3b8;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        /* PEQUEÑA FRASE DESCRIPTIVA */
+        .description {
+            font-size: 15px;
+            color: #475569;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            border-left: 3px solid #667eea;
+            padding-left: 12px;
+            font-weight: 400;
+        }
+
+        /* TELÉFONO (ÚNICO CONTACTO) */
+        .phone-mini {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 5px 0 10px;
+        }
+
+        .phone-mini i {
+            color: #27ae60;
+            font-size: 24px;
+            background: #e6f7ec;
+            padding: 10px;
+            border-radius: 50%;
+        }
+
+        .phone-mini span {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1e293b;
+            letter-spacing: -0.02em;
+        }
+
+        /* MENSAJE WEB */
+        .web-message {
+            margin-top: 10px;
+        }
+        
+        .web-label {
+            color: #64748b;
+            font-size: 14px;
+        }
+        
+        .web-url {
+            font-size: 18px;
+            font-weight: 500;
+            color: #667eea;
+            margin-top: 2px;
+        }
+
+        /* COLUMNA DERECHA (QR) */
+        .right-col {
+            flex: 1;
+            background: #f8faff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            border-left: 1px dashed #cbd5e1;
+        }
+
+        /* ESPACIO QR */
+        .qr-placeholder {
+            width: 130px;
+            height: 130px;
+            background: white;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 15px -6px rgba(0,0,0,0.1);
+            border: 2px solid white;
+            margin-bottom: 15px;
+        }
+
+        .qr-placeholder i {
+            font-size: 70px;
+            color: #667eea;
+            opacity: 0.3;
+        }
+
+        .qr-placeholder span {
+            font-size: 12px;
+            color: #667eea;
+            font-weight: 500;
+            background: #e6e9fc;
+            padding: 4px 12px;
+            border-radius: 40px;
+            margin-top: 5px;
+        }
+
+        .right-col p {
+            color: #1e293b;
+            font-weight: 500;
+            font-size: 15px;
+            text-align: center;
+        }
+
+        .right-col small {
+            color: #94a3b8;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        /* LÍNEA SUTIL INFERIOR */
+        .footer-line {
+            height: 6px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            .card-row {
+                flex-direction: column;
+            }
+            .right-col {
+                border-left: none;
+                border-top: 1px dashed #cbd5e1;
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+        <button onclick="window.print()" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 10px 25px; border-radius: 60px; font-weight: 500; cursor: pointer; margin-bottom: 5px; border: 1px solid white;">
+            <i class="fas fa-print"></i> imprimir
+        </button>
+
+        <!-- TARJETA MINIMAL -->
+        <div class="card-simple">
+            <div class="card-row">
+                <!-- IZQUIERDA: LOGO + FRASE + CONTACTO -->
+                <div class="left-col">
+                    <div class="logo-group">
+                        <h1>💪 GymManager</h1>
+                        <p>software</p>
+                    </div>
+
+                    <!-- PEQUEÑA FRASE DESCRIPTIVA -->
+                    <div class="description">
+                        Control de socios y pagos<br>para gimnasios · simple y efectivo
+                    </div>
+
+                    <div class="phone-mini">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>+56 9 6452 4143</span>
+                    </div>
+
+                    <div class="web-message">
+                        <div class="web-label">más info:</div>
+                        <div class="web-url">gymmanager.cl</div>
+                    </div>
+                    
+                    <div style="color: #94a3b8; font-size: 12px; margin-top: 12px;">
+                        <i class="fab fa-whatsapp"></i> mismo número
+                    </div>
+                </div>
+
+                <!-- DERECHA: QR -->
+                <div class="right-col">
+                    <div class="qr-placeholder">
+        <!-- IMAGEN QR REAL (reemplaza la URL con tu imagen) -->
+                    <img src="img/qr.jpeg" 
+                    alt="QR GymManager"
+                    style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;">
+                </div>
+                <p>web y contacto</p>
+                <small>escanea para más info</small>
+                </div>
+            </div>
+            <div class="footer-line"></div>
+        </div>
+
+        <p style="color: #94a3b8; font-size: 13px; margin-top: 10px;">
+            <i class="fas fa-arrows-alt-h"></i> horizontal · espacio QR · frase incluida
+        </p>
+    </div>
+</body>
+</html>

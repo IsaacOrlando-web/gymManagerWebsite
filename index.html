@@ -267,47 +267,72 @@
             .phone-number {
                 font-size: 24px;
             }
+            
+            /* NUEVO: Cambiar grid a 1 columna en móviles */
+            .grid-2-columns {
+                grid-template-columns: 1fr !important;
+            }
+            
+            /* Ajustar orden para que la imagen quede debajo del texto */
+            .grid-2-columns .showcase-card {
+                order: 2 !important;
+                margin-top: 20px;
+            }
+            
+            /* Aumentar altura de imágenes en móvil para que se vean completas */
+            .showcase-card img {
+                height: auto !important;
+                max-height: 320px;
+                width: 100%;
+                object-fit: contain;
+                background-color: #e6edf6;
+            }
         }
 
-         @media (max-width: 700px) {
-        .navbar {
-            flex-direction: column;
-            align-items: start;
-            gap: 15px;
-        }
-        .nav-links {
-            gap: 24px;
-        }
-        .phone-block {
-            flex-direction: column;
-            gap: 8px;
-            padding: 18px 24px;
-            border-radius: 48px;
-        }
-        .phone-number {
+        /* NUEVOS ESTILOS PARA PRECIO TACHADO Y OPORTUNIDAD */
+        .price-market {
             font-size: 24px;
+            color: var(--text-light);
+            text-decoration: line-through;
+            text-decoration-color: var(--danger-color);
+            text-decoration-thickness: 3px;
+            margin-right: 12px;
+            font-weight: 400;
         }
         
-        /* NUEVO: Cambiar grid a 1 columna en móviles */
-        .grid-2-columns {
-            grid-template-columns: 1fr !important;
+        .price-opportunity {
+            font-size: 52px;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: inline-block;
         }
         
-        /* Ajustar orden para que la imagen quede debajo del texto */
-        .grid-2-columns .showcase-card {
-            order: 2 !important;
-            margin-top: 20px;
+        .badge-opportunity {
+            background: var(--success-gradient);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 16px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 18px -6px rgba(39,174,96,0.4);
         }
         
-        /* Aumentar altura de imágenes en móvil para que se vean completas */
-        .showcase-card img {
-            height: auto !important;  /* Cambiado de 240px a auto */
-            max-height: 320px;        /* Límite máximo opcional */
-            width: 100%;
-            object-fit: contain;      /* Cambiado de cover a contain */
-            background-color: #e6edf6; /* Fondo por si la imagen no cubre todo */
+        .limited-offer {
+            background: #fff1e6;
+            border-left: 4px solid var(--warning-color);
+            padding: 16px 20px;
+            border-radius: 16px;
+            margin-top: 25px;
+            font-weight: 500;
         }
-    }
+        
+        .limited-offer i {
+            color: var(--warning-color);
+            margin-right: 10px;
+            font-size: 20px;
+        }
     </style>
 </head>
 <body>
@@ -362,105 +387,149 @@
         </div>
     </section>
 
-    <!-- SECCIÓN DESCRIPCIÓN DEL PROGRAMA (texto + lugar para imagen) -->
     <!-- SECCIÓN DESCRIPCIÓN DEL PROGRAMA -->
-<section id="programa" style="padding: 90px 0 40px;">
-    <div class="container">
-        <div class="grid-2-columns" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
-            <div>
-                <span style="font-size: 14px; color: var(--primary-color); text-transform: uppercase; letter-spacing: 1px;">qué hace</span>
-                <h2 class="section-title">Registro de miembros y control de pagos</h2>
-                <div class="hr-subtle"></div>
-                <p style="color: var(--text-secondary); margin-bottom: 30px; font-size: 16px;">
-                    Sabrás al instante quién está activo, quién debe, qué plan tiene y los días de atraso. 
-                    Sección exclusiva para finanzas (solo usuarios autorizados) con ingresos del mes y nuevos socios.
-                </p>
-                <p style="color: var(--text-primary); font-weight: 500;">
-                    ✔ Abandoná los papeles y las planillas Excel interminables.
-                </p>
-            </div>
-            <div class="showcase-card" style="max-width: 100%;">
-                <img src='./img/imgMembers.png' 
-                    alt="Vista de todos los miembros en GymManager" 
-                    style="width: 100%; height: 220px; object-fit: cover; display: block; border-bottom: 1px solid var(--border-color);">
-                <div class="card-content">
-                    <h3>Vista "todos los miembros"</h3>
-                    <p>Filtros por estado: activos, morosos, vencidos. Búsqueda instantánea.</p>
+    <section id="programa" style="padding: 90px 0 40px;">
+        <div class="container">
+            <div class="grid-2-columns" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+                <div>
+                    <span style="font-size: 14px; color: var(--primary-color); text-transform: uppercase; letter-spacing: 1px;">qué hace</span>
+                    <h2 class="section-title">Registro de miembros y control de pagos</h2>
+                    <div class="hr-subtle"></div>
+                    <p style="color: var(--text-secondary); margin-bottom: 30px; font-size: 16px;">
+                        Sabrás al instante quién está activo, quién debe, qué plan tiene y los días de atraso. 
+                        Sección exclusiva para finanzas (solo usuarios autorizados) con ingresos del mes y nuevos socios.
+                    </p>
+                    <p style="color: var(--text-primary); font-weight: 500;">
+                        ✔ Abandoná los papeles y las planillas Excel interminables.
+                    </p>
+                </div>
+                <div class="showcase-card" style="max-width: 100%;">
+                    <img src='./img/imgMembers.png' 
+                        alt="Vista de todos los miembros en GymManager" 
+                        style="width: 100%; height: 220px; object-fit: cover; display: block; border-bottom: 1px solid var(--border-color);">
+                    <div class="card-content">
+                        <h3>Vista "todos los miembros"</h3>
+                        <p>Filtros por estado: activos, morosos, vencidos. Búsqueda instantánea.</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- SEGUNDA IMAGEN / CAPTURA (finanzas) -->
-<section style="padding: 40px 0;" id="imagenes">
-    <div class="container">
-        <div class="grid-2-columns" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
-            <div class="showcase-card" style="order: 1; max-width: 100%;">
-                <img src="img/finanzas.png" 
-                    alt="Panel de finanzas GymManager" 
-                    style="width: 100%; height: 220px; object-fit: cover; display: block; border-bottom: 1px solid var(--border-color);">
-                <div class="card-content">
-                    <h3>Panel para usuarios autorizados</h3>
-                    <p>Ingresos del mes, nuevos miembros, total activos. Diseño claro y minimal.</p>
+    <!-- SEGUNDA IMAGEN / CAPTURA (finanzas) -->
+    <section style="padding: 40px 0;" id="imagenes">
+        <div class="container">
+            <div class="grid-2-columns" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+                <div class="showcase-card" style="order: 1; max-width: 100%;">
+                    <img src="img/finanzas.png" 
+                        alt="Panel de finanzas GymManager" 
+                        style="width: 100%; height: 220px; object-fit: cover; display: block; border-bottom: 1px solid var(--border-color);">
+                    <div class="card-content">
+                        <h3>Panel para usuarios autorizados</h3>
+                        <p>Ingresos del mes, nuevos miembros, total activos. Diseño claro y minimal.</p>
+                    </div>
                 </div>
-            </div>
-            <div style="order: 2;">
-                <span style="font-size: 14px; color: var(--primary-color); text-transform: uppercase;">finanzas claras</span>
-                <h2 class="section-title">Lo que entra, lo que debe</h2>
-                <div class="hr-subtle"></div>
-                <p style="color: var(--text-secondary);">
-                    Sin complicaciones: solo las personas que tú autorices ven los números. 
-                    Ideal para dueños o administradores.
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- TERCERA IMAGEN: personalización + logo -->
-<section style="padding: 40px 0;">
-    <div class="container">
-        <div class="grid-2-columns" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
-            <div>
-                <span style="font-size: 14px; color: var(--primary-color); text-transform: uppercase;">a tu medida</span>
-                <h2 class="section-title">Tu logo, tu gimnasio, tus socios</h2>
-                <div class="hr-subtle"></div>
-                <p style="color: var(--text-secondary);">
-                    Cargamos todos los miembros actuales, ponemos tu logo y te capacitamos 
-                    sin costo. El sistema se ve como parte de tu marca.
-                </p>
-            </div>
-            <div class="showcase-card" style="max-width: 100%;">
-                <img src="img/dashboard.png" 
-                    alt="Dashboard GymManager" 
-                    style="width: 100%; height: 220px; object-fit: cover; display: block; border-bottom: 1px solid var(--border-color);">
-                <div class="card-content">
-                    <h3>Aplicación adaptable a tu estilo</h3>
-                    <p>Cambio en los colores, logo, para que sea tuya</p>
+                <div style="order: 2;">
+                    <span style="font-size: 14px; color: var(--primary-color); text-transform: uppercase;">finanzas claras</span>
+                    <h2 class="section-title">Lo que entra, lo que debe</h2>
+                    <div class="hr-subtle"></div>
+                    <p style="color: var(--text-secondary);">
+                        Sin complicaciones: solo las personas que tú autorices ven los números. 
+                        Ideal para dueños o administradores.
+                    </p>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-    <!-- SECCIÓN PRECIO (simple, solo números) -->
+    <!-- TERCERA IMAGEN: personalización + logo -->
+    <section style="padding: 40px 0;">
+        <div class="container">
+            <div class="grid-2-columns" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+                <div>
+                    <span style="font-size: 14px; color: var(--primary-color); text-transform: uppercase;">a tu medida</span>
+                    <h2 class="section-title">Tu logo, tu gimnasio, tus socios</h2>
+                    <div class="hr-subtle"></div>
+                    <p style="color: var(--text-secondary);">
+                        Cargamos todos los miembros actuales, ponemos tu logo y te capacitamos 
+                        sin costo. El sistema se ve como parte de tu marca.
+                    </p>
+                </div>
+                <div class="showcase-card" style="max-width: 100%;">
+                    <img src="img/dashboard.png" 
+                        alt="Dashboard GymManager" 
+                        style="width: 100%; height: 220px; object-fit: cover; display: block; border-bottom: 1px solid var(--border-color);">
+                    <div class="card-content">
+                        <h3>Aplicación adaptable a tu estilo</h3>
+                        <p>Cambio en los colores, logo, para que sea tuya</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN PRECIO CON OPORTUNIDAD DE INVERSIÓN (ACTUALIZADA) -->
     <section id="precios" style="padding: 80px 0;">
         <div class="container">
-            <div style="background: var(--card-bg); border-radius: 48px; padding: 56px 48px; box-shadow: var(--shadow-light);">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+            <div style="background: var(--card-bg); border-radius: 48px; padding: 56px 48px; box-shadow: var(--shadow-medium); border: 2px solid var(--primary-color); position: relative; overflow: hidden;">
+                <!-- Badge de oportunidad flotante -->
+                <div style="position: absolute; top: 20px; right: 20px; background: var(--warning-color); color: white; padding: 8px 25px; border-radius: 40px; font-weight: 600; transform: rotate(3deg); box-shadow: var(--shadow-light);">
+                    ⚡ 5 primeros clientes
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
                     <div>
-                        <h2 class="section-title" style="margin-bottom: 8px;">Inversión clara</h2>
+                        <span class="badge-opportunity">🚀 OPORTUNIDAD DE INVERSIÓN</span>
+                        <h2 class="section-title" style="margin-bottom: 8px;">Lanzamiento</h2>
                         <div class="hr-subtle"></div>
-                        <div style="font-size: 52px; font-weight: 600; letter-spacing: -0.02em;">$90.000</div>
-                        <p style="color: var(--text-secondary); margin: 8px 0 24px;">pago único · incluye adaptación, logo, carga de miembros y capacitación</p>
-                        <div style="font-size: 38px; font-weight: 600;">$50.000 <span style="font-size: 16px; font-weight: 400; color: var(--text-light);">/ mes</span></div>
+                        
+                        <!-- Precio de mercado tachado -->
+                        <div style="margin-bottom: 10px;">
+                            <span class="price-market">$150.000</span>
+                            <span style="font-size: 18px; color: var(--text-secondary);">mercado</span>
+                        </div>
+                        
+                        <!-- Precio actual destacado -->
+                        <div style="font-size: 52px; font-weight: 700; color: var(--primary-color); letter-spacing: -0.02em; line-height: 1.2;">
+                            $90.000
+                        </div>
+                        <p style="color: var(--text-secondary); margin: 8px 0 15px;">pago único · incluye adaptación, logo, carga de miembros y capacitación</p>
+                        
+                        <!-- Precio mensual -->
+                        <div style="font-size: 38px; font-weight: 600; margin-top: 25px;">$50.000 <span style="font-size: 16px; font-weight: 400; color: var(--text-light);">/ mes</span></div>
                         <p style="color: var(--text-secondary); margin: 8px 0 0;">hosting, mantenimiento, soporte inmediato y arreglo de errores</p>
+                        
+                        <!-- Oferta limitada -->
+                        <div class="limited-offer">
+                            <i class="fas fa-clock"></i> 
+                            <strong>Precio especial de lanzamiento</strong> para los primeros 5 gimnasios. Después de eso, el valor será el de mercado.
+                        </div>
                     </div>
-                    <div style="background: var(--bg-color); border-radius: 32px; padding: 32px;">
-                        <i class="fas fa-shield-alt" style="color: var(--primary-color); font-size: 40px; margin-bottom: 16px;"></i>
-                        <h3 style="font-size: 20px;">Sin sorpresas</h3>
-                        <p style="color: var(--text-secondary);">No hay contratos largos. Si un error aparece, lo soluciono al instante. Hosting y respaldo incluidos.</p>
+                    
+                    <div style="background: linear-gradient(145deg, var(--bg-color), white); border-radius: 32px; padding: 35px; border: 1px dashed var(--primary-color);">
+                        <i class="fas fa-chart-line" style="color: var(--primary-color); font-size: 42px; margin-bottom: 20px;"></i>
+                        <h3 style="font-size: 24px; margin-bottom: 15px;">Inversión inteligente</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 25px;">
+                            Programas similares en el mercado parten desde <strong>$150.000 + $70.000/mes</strong>. 
+                            Estás accediendo a un precio preferencial por ser de los primeros en confiar.
+                        </p>
+                        <div style="background: white; border-radius: 16px; padding: 20px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <span>Valor real de mercado:</span>
+                                <span style="text-decoration: line-through; color: var(--danger-color);">$150.000</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: 600;">
+                                <span>Tu inversión hoy:</span>
+                                <span style="color: var(--success-color); font-size: 22px;">$90.000</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 10px; margin-top: 10px;">
+                                <span>Ahorro inmediato:</span>
+                                <span style="color: var(--success-color); font-weight: 700;">$60.000</span>
+                            </div>
+                        </div>
+                        <p style="margin-top: 20px; font-size: 14px; color: var(--primary-color);">
+                            <i class="fas fa-check-circle"></i> Sin aumento de precio en la mensualidad por 1 año
+                        </p>
                     </div>
                 </div>
             </div>
